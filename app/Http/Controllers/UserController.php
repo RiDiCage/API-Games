@@ -59,8 +59,8 @@ class UserController extends Controller implements CrudController
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-//        $user = User::findOrFail($id);
-//
+        //    $user = User::findOrFail($id);
+
         return redirect()->route('user.index');
     }
 
