@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\SpaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SpaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,18 +18,12 @@ use App\Http\Controllers\SpaController;
 |
 */
 
-Route::get('/vue', fn() => redirect('/welcome'));
-// Route::get('/vue/{any}', "SpaController@index")->where("any", '.*');
-
-
 Route::get('/', [HomeController::class, 'index']);
 
-//Route::prefix('/vue')->group(function () {
-//    Route::get('/', "SpaController@index")->where("any", '.*');
-//    Route::get('{any}', "SpaController@index.php")->where("any", '.*');
-//});
-
 Auth::routes();
+
+// Route::get('/vue', fn() => redirect('/vue/app'));
+// Route::get('/vue/{any}', "SpaController@index")->where("any", '.*');
 
 Route::prefix('/user')->middleware('auth')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('user.index');
@@ -58,8 +52,6 @@ Route::prefix('/game')->group(function () {
 Route::prefix('/category')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('category.index');
     Route::get('/add', [CategoryController::class, 'add'])->name('category.add');
-//    Route::post('/{id}/add', [CategoryController::class, 'addLink'])->name('category.addLink');
-//    Route::post('/{id}/remove', [CategoryController::class, 'removeLink'])->name('category.removeLink');
     Route::get('/{id}', [CategoryController::class, 'show'])->name('category.show');
     Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
     Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update');

@@ -21,8 +21,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('/v1')->group(function () {
-    Route::prefix('/categories')->group(function () {
+
+    Route::prefix('/cat')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
+        Route::get('/show', [GameController::class, 'show']);
+        Route::get('/update', [GameController::class, 'update']);
+        Route::get('/store', [GameController::class, 'store']);
+        Route::get('/delete', [GameController::class, 'delete']);
+        Route::get('/destroy', [GameController::class, 'destroy']);
 
     });
 

@@ -1,10 +1,7 @@
 <template>
     <div>
-        <router-view />
-
-
-
-        lolmao
+        <router-view>
+        </router-view>
     </div>
 </template>
 
