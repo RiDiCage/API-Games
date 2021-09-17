@@ -1,3 +1,38 @@
+/*
+	Copyright (C) 2009 - 2021 RiDi Cage Productions, Inc.
+	Amersfoort, Utrecht, The Netherlands
+
+	Licensed under MIT ( https://www.ridis.nl/index.php?p=license )
+*/
+
 {
-    "git.ignoreLimitWarning": true
+    "liveSassCompile.settings.generateMap": false,
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath": "/css"
+        },
+        {
+            "format": "compressed",
+            "extensionName": ".min.css",
+            "savePath": "/css/min"
+        }
+    ],
+    "vscode.tsc.compiler.alertTSConfigChanges": "never",
+
+    "git.ignoreLimitWarning": true,
+
+    "workbench.colorCustomizations": {
+        "breadcrumbs.enabled": true,
+        "editor.colorDecorators": true,
+        "editor.fontSize": 10,
+        "editorCursor.foreground": "#ffff00",
+        "editor.minimap.enabled": true,
+        "editor.tabSize": 4,
+        "editor.wordWrap": "off",
+        "window.zoomLevel": 0,
+        "workbench.colorTheme": "Visual Studio Dark",
+        "workbench.iconTheme": "material-icon-theme",
+    }
 }
