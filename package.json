@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "git": "^0.1.5",
         "vue-router": "^3.5.2"
     }
 }
