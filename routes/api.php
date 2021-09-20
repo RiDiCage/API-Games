@@ -22,14 +22,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('/v1')->group(function () {
 
-    Route::prefix('/cat')->group(function () {
+    Route::prefix('/category')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
-        Route::get('/show', [GameController::class, 'show']);
-        Route::get('/update', [GameController::class, 'update']);
-        Route::get('/store', [GameController::class, 'store']);
-        Route::get('/delete', [GameController::class, 'delete']);
-        Route::get('/destroy', [GameController::class, 'destroy']);
-
+        Route::get('/show', [CategoryController::class, 'show']);
+        Route::get('/update', [CategoryController::class, 'update']);
+        Route::get('/store', [CategoryController::class, 'store']);
+        Route::get('/destroy', [CategoryController::class, 'destroy']);
     });
 
     Route::prefix('/games')->group(function () {
@@ -42,13 +40,5 @@ Route::prefix('/v1')->group(function () {
         Route::get('/delete', [GameController::class, 'delete']);
         Route::get('/destroy', [GameController::class, 'destroy']);
     });
-
-//    Route::prefix('/category')->group(function () {
-//        Route::get('/', [GameController::class, 'index']);
-//        Route::get('/show', [GameController::class, 'show']);
-//        Route::get('/update', [GameController::class, 'update']);
-//        Route::get('/store', [GameController::class, 'store']);
-//        Route::get('/delete', [GameController::class, 'delete']);
-//        Route::get('/destroy', [GameController::class, 'destroy']);
-//    });
+    
 });

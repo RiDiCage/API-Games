@@ -12,6 +12,6 @@ class Category extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Game::class, 'categories_game');
+        return $this->belongsToMany(Category::class, 'categories_game');
     }
 }

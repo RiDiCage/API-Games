@@ -6,6 +6,7 @@ class SpaController extends Controller
 {
     public function index()
     {
-        return view('vue');
+        $view = view('vue');
+        return $view;
     }
 }
