@@ -1,8 +1,8 @@
 <?php
+    namespace App\Http\Controllers\Api;
 
-// namespace App\Http\Controllers\Api;
+    class DropdownController
+    {
 
-// class DropdownController
-// {
-
-// }
+    }
+?>

@@ -37580,7 +37580,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Game\n")])
+  return _c("div", [_vm._v("\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37604,7 +37604,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("router-view"), _vm._v("\n\n\n\n    lolmao\n")], 1)
+  return _c("div", [_c("router-view"), _vm._v("\n")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
