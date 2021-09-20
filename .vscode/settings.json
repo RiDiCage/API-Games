@@ -11,12 +11,12 @@
         {
             "format": "expanded",
             "extensionName": ".css",
-            "savePath": "/css"
+            "savePath": "/public/css/app"
         },
         {
             "format": "compressed",
             "extensionName": ".min.css",
-            "savePath": "/css/min"
+            "savePath": "/public/css/min"
         }
     ],
     "vscode.tsc.compiler.alertTSConfigChanges": "never",

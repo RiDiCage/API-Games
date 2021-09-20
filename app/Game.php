@@ -1,27 +1,27 @@
 <?php
+    namespace App;
 
-namespace App;
+    use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\SoftDeletes;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Game extends Model
-{
-    use SoftDeletes;
-
-    protected $fillable = [
-        'name',
-        'description',
-        'release_at'
-    ];
-
-    public function games()
+    class Game extends Model
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
-    }
+        use SoftDeletes;
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class, 'categories_game');
+        protected $fillable = [
+            'name',
+            'description',
+            'release_at'
+        ];
+
+        public function games()
+        {
+            return $this->belongsToMany(User::class)->withTimestamps();
+        }
+
+        public function categories()
+        {
+            return $this->belongsToMany(Category::class, 'categories_game');
+        }
     }
-}
+?>
