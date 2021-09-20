@@ -1,152 +1,152 @@
 <?php
+    namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
+    use App\Game;
+    use App\User;
+    use App\Category;
+    use Illuminate\Database\Eloquent\SoftDeletes;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
 
-use App\Game;
-use App\User;
-use App\Category;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class GameController extends Controller implements CrudController
-{
-    use SoftDeletes;
-
-    public function index()
+    class GameController extends Controller implements CrudController
     {
-        $view = View('game.index');
-        $view->games = Game::all();
+        use SoftDeletes;
 
-        return $view;
-    }
+        public function index()
+        {
+            $view = View('game.index');
+            $view->games = Game::all();
 
-    public function add()
-    {
+            return $view;
+        }
 
-        $view = View('game.add');
-        $view->categories = Category::pluck('name', 'id');
+        public function add()
+        {
 
-        return $view;
-    }
+            $view = View('game.add');
+            $view->categories = Category::pluck('name', 'id');
 
-    public function addLink(int $id)
-    {
-        $game = Game::findOrFail($id);
-        $user = User::with('games')->find(Auth::id());
+            return $view;
+        }
 
-        if ($user->games->contains($id))
-            return redirect()->route('game.index')->with('error', "<b>\"{$game->name}\"</b> is already linked to your account.");
+        public function addLink(int $id)
+        {
+            $game = Game::findOrFail($id);
+            $user = User::with('games')->find(Auth::id());
 
-        $user->games()->attach($game);
+            if ($user->games->contains($id))
+                return redirect()->route('game.index')->with('error', "<b>\"{$game->name}\"</b> is already linked to your account.");
 
-        return redirect()->route('game.index')->with('success', "<b>\"{$game->name}\"</b> is linked to your account.");
-    }
+            $user->games()->attach($game);
 
-    public function removeLink(int $id)
-    {
-        $game = Game::findOrFail($id);
-        $user = User::with('games')->find(Auth::id());
+            return redirect()->route('game.index')->with('success', "<b>\"{$game->name}\"</b> is linked to your account.");
+        }
 
-        if (!$user->games->contains($id))
-            return redirect()->route('game.index')->with('error', "<b>\"{$game->name}\"</b> is still linked to your account.");
+        public function removeLink(int $id)
+        {
+            $game = Game::findOrFail($id);
+            $user = User::with('games')->find(Auth::id());
 
-        $user->games()->detach($game);
-        return redirect()->route('game.index')->with('success', "<b>\"{$game->name}\"</b> is unlinked from your account.");
-    }
+            if (!$user->games->contains($id))
+                return redirect()->route('game.index')->with('error', "<b>\"{$game->name}\"</b> is still linked to your account.");
 
-    public function show(int $id)
-    {
-        $view = View('game.show');
-        $view->game = Game::findOrFail($id);
+            $user->games()->detach($game);
+            return redirect()->route('game.index')->with('success', "<b>\"{$game->name}\"</b> is unlinked from your account.");
+        }
 
-        return $view;
-    }
+        public function show(int $id)
+        {
+            $view = View('game.show');
+            $view->game = Game::findOrFail($id);
 
-    public function edit(int $id)
-    {
-        $view = View('game.edit');
+            return $view;
+        }
 
-        $view->game = Game::with('categories')->findOrFail($id);
-        $view->categories = Category::pluck('name', 'id');
+        public function edit(int $id)
+        {
+            $view = View('game.edit');
 
-        return $view;
-    }
+            $view->game = Game::with('categories')->findOrFail($id);
+            $view->categories = Category::pluck('name', 'id');
 
-    public function update(Request $request, int $id): \Illuminate\Http\RedirectResponse
-    {
-        $request->validate(
-            [
+            return $view;
+        }
+
+        public function update(Request $request, int $id): \Illuminate\Http\RedirectResponse
+        {
+            $request->validate(
+                [
+                    'name' => 'required|string|min:3',
+                    'description' => 'required|string|min:3|max:50',
+                    'release_at' => 'required|date'
+                ]
+            );
+
+            $game = Game::findOrFail($id);
+            $game->update($request->all());
+
+            $categories = NULL;
+
+            if ($request->categories)
+                foreach ($request->categories as $key => $val)
+                    $categories[] = $key;
+
+            $game->categories()->sync($categories);
+
+            return redirect()->route('game.index')->with('success', "$game->name updated");
+        }
+
+        public function create(int $id)
+        {
+            // TODO: Implement create() method.
+        }
+
+        public function store(Request $request): \Illuminate\Http\RedirectResponse
+        {
+
+            $request->validate([
                 'name' => 'required|string|min:3',
                 'description' => 'required|string|min:3|max:50',
-                'release_at' => 'required|date'
-            ]
-        );
+                'release_at' => 'nullable|date'
+            ]);
 
-        $game = Game::findOrFail($id);
-        $game->update($request->all());
+            $game = new Game();
+            $game->name = $request->input('name');
+            $game->description = $request->input('description');
+            $game->release_at = $request->input('release_at');
 
-        $categories = NULL;
+            $game->saveOrFail();
 
-        if ($request->categories)
-            foreach ($request->categories as $key => $val)
-                $categories[] = $key;
+            $categories = NULL;
 
-        $game->categories()->sync($categories);
+            if ($request->categories)
+                foreach ($request->categories as $key => $val)
+                    $categories[] = $key;
 
-        return redirect()->route('game.index')->with('success', "$game->name updated");
+            $game->categories()->sync($categories);
+
+
+            return redirect()->route('game.index')->with('success', "$game->name added");
+        }
+
+        // Soft delete
+        public function delete(int $id): \Illuminate\Http\RedirectResponse
+        {
+            $game = Game::findOrFail($id);
+            $game->delete();
+
+            return redirect()->route('game.index')->with('success', "$game->name is deleted.");
+        }
+
+        // Force Delete
+        public function destroy(int $id): \Illuminate\Http\RedirectResponse
+        {
+            $game = Game::with('categories')->findOrFail($id);
+
+            $game->categories()->sync([]);
+            $game->forcedelete();
+
+            return redirect()->route('game.index')->with('success', "$game->name is destroyed.");
+        }
     }
-
-    public function create(int $id)
-    {
-        // TODO: Implement create() method.
-    }
-
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
-    {
-
-        $request->validate([
-            'name' => 'required|string|min:3',
-            'description' => 'required|string|min:3|max:50',
-            'release_at' => 'nullable|date'
-        ]);
-
-        $game = new Game();
-        $game->name = $request->input('name');
-        $game->description = $request->input('description');
-        $game->release_at = $request->input('release_at');
-
-        $game->saveOrFail();
-
-        $categories = NULL;
-
-        if ($request->categories)
-            foreach ($request->categories as $key => $val)
-                $categories[] = $key;
-
-        $game->categories()->sync($categories);
-
-
-        return redirect()->route('game.index')->with('success', "$game->name added");
-    }
-
-    // Soft delete
-    public function delete(int $id): \Illuminate\Http\RedirectResponse
-    {
-        $game = Game::findOrFail($id);
-        $game->delete();
-
-        return redirect()->route('game.index')->with('success', "$game->name is deleted.");
-    }
-
-    // Force Delete
-    public function destroy(int $id): \Illuminate\Http\RedirectResponse
-    {
-        $game = Game::with('categories')->findOrFail($id);
-
-        $game->categories()->sync([]);
-        $game->forcedelete();
-
-        return redirect()->route('game.index')->with('success', "$game->name is destroyed.");
-    }
-}
+?>

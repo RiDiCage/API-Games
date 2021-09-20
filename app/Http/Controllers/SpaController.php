@@ -1,12 +1,12 @@
 <?php
+    namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
-
-class SpaController extends Controller
-{
-    public function index()
+    class SpaController extends Controller
     {
-        $view = view('vue');
-        return $view;
+        public function index()
+        {
+            $view = view('vue');
+            return $view;
+        }
     }
-}
+?>
