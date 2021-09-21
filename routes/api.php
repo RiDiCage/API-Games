@@ -21,24 +21,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('/v1')->group(function () {
-
-    Route::prefix('/category')->group(function () {
+    Route::prefix('/categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
-        Route::get('/show', [CategoryController::class, 'show']);
-        Route::get('/update', [CategoryController::class, 'update']);
-        Route::get('/store', [CategoryController::class, 'store']);
-        Route::get('/destroy', [CategoryController::class, 'destroy']);
+        Route::post('/show', [CategoryController::class, 'show']);
+        Route::post('/update', [CategoryController::class, 'update']);
+        Route::post('/store', [CategoryController::class, 'store']);
+        Route::post('/destroy', [CategoryController::class, 'destroy']);
     });
 
     Route::prefix('/games')->group(function () {
         Route::get('/', [GameController::class, 'index']);
-        Route::get('/addLink', [GameController::class, 'addLink']);
-        Route::get('/removeLink', [GameController::class, 'removeLink']);
-        Route::get('/show', [GameController::class, 'show']);
-        Route::get('/update', [GameController::class, 'update']);
-        Route::get('/store', [GameController::class, 'store']);
-        Route::get('/delete', [GameController::class, 'delete']);
-        Route::get('/destroy', [GameController::class, 'destroy']);
+        Route::post('/addLink', [GameController::class, 'addLink']);
+        Route::post('/removeLink', [GameController::class, 'removeLink']);
+        Route::post('/show', [GameController::class, 'show']);
+        Route::post('/update', [GameController::class, 'update']);
+        Route::post('/store', [GameController::class, 'store']);
+        Route::post('/delete', [GameController::class, 'delete']);
+        Route::post('/destroy', [GameController::class, 'destroy']);
     });
-    
 });

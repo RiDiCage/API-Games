@@ -17,9 +17,23 @@
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Released at</th>
-                                    <th>Edit Game</th>
-                                    <th>Delete Game</th>
-                                    <th>Force Delete</th>
+                                    @if (!\Illuminate\Support\Facades\Auth::user()->games->contains($game->id))
+                                        <th>
+                                            Link to Account
+
+                                            <form id='addGame-{{ $game->id }}' action="{{ route('game.addLink', $game->id) }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </th>
+                                    @else
+                                        <th>Edit Game</th>
+                                        <th>Delete Game</th>
+                                        <th>Force Delete</th>
+
+                                        <form id='removeGame-{{ $game->id }}' action="{{ route('game.removeLink', $game->id) }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,31 +41,43 @@
                                     <td>{{ $game->name }}</td>
                                     <td>{{ $game->description }}</a></td>
                                     <td>{{ $game->release_at }}</td>
-                                    <td><a href="{{ route('game.edit', $game->id) }}" role="button" class="btn btn-warning">Edit</a></td>
-                                    <td>
-                                        <a class="btn btn-danger" role="button" href="#"
-                                           onclick="event.preventDefault();
-                                                    document.getElementById('delete-form').submit();">
-                                            Delete
-                                        </a>
+                                    @if (!\Illuminate\Support\Facades\Auth::user()->games->contains($game->id))
+                                        <td>
+                                            <a href="#" class="btn btn-success" role="button"
+                                               onclick="event.preventDefault();
+                                                   document.getElementById('addGame-{{ $game->id }}').submit();">+</a>
 
-                                        <form id="delete-form" action="{{ route('game.delete', $game->id) }}" method="POST" class="d-none">
-                                            @csrf
-                                            @method('delete')
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-danger" role="button" href="#"
-                                           onclick="event.preventDefault();
-                                                    document.getElementById('destroy-form').submit();">
-                                            Destroy
-                                        </a>
+                                            <form id='addGame-{{ $game->id }}' action="{{ route('game.addLink', $game->id) }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </td>
+                                    @else
+                                        <td><a href="{{ route('game.edit', $game->id) }}" role="button" class="btn btn-warning">Edit</a></td>
+                                        <td>
+                                            <a class="btn btn-danger" role="button" href="#"
+                                            onclick="event.preventDefault();
+                                                        document.getElementById('delete-form').submit();">
+                                                Delete
+                                            </a>
 
-                                        <form id="destroy-form" action="{{ route('game.destroy', $game->id) }}" method="POST" class="d-none">
-                                            @csrf
-                                            @method('delete')
-                                        </form>
-                                    </td>
+                                            <form id="delete-form" action="{{ route('game.delete', $game->id) }}" method="POST" class="d-none">
+                                                @csrf
+                                                @method('delete')
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger" role="button" href="#"
+                                            onclick="event.preventDefault();
+                                                        document.getElementById('destroy-form').submit();">
+                                                Destroy
+                                            </a>
+
+                                            <form id="destroy-form" action="{{ route('game.destroy', $game->id) }}" method="POST" class="d-none">
+                                                @csrf
+                                                @method('delete')
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>

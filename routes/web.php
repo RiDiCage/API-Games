@@ -57,11 +57,11 @@
     });
 
     // Route::get('/vue', fn() => redirect('/vue/app'));
-    // Route::get('/vue/{any}', "VueController@index")->where("any", '.*');
-    Route::prefix('/vue')->group(function() {
-        Route::get('/', [VueController::class, 'index'])->name('vue.index');
-        Route::get('/{any}', [VueController::class, 'index'])->where("any", '.*');
-    });
+    // Route::get('/vue/{any}', "VueController@index")->where('any', '^(?!api).*$');
+    // Route::prefix('/vue')->group(function() {
+    //     Route::get('/', [VueController::class, 'index'])->name('vue.index');
+    //     Route::get('/{any}', [VueController::class, 'index'])->where("any", '.*');
+    // });
 
     //Route::resource('user', 'UserController')->middleware('auth');
 ?>
