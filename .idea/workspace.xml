@@ -144,7 +144,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Mantra_Api" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -192,6 +192,9 @@
       <workItem from="1631879830967" duration="1343000" />
       <workItem from="1632121856535" duration="3078000" />
       <workItem from="1632494588452" duration="223000" />
+      <workItem from="1633440647494" duration="610000" />
+      <workItem from="1633444641145" duration="7000" />
+      <workItem from="1633444681731" duration="12000" />
     </task>
     <servers />
   </component>
