@@ -371,8 +371,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Richard', 'rvdkooij@circlepartners.com', NULL, '$2y$10$mx2l8k3szgEcJZCT5IkZSOuWz9JHnoZqTMFUb6QQADf1/1l.XtKVS', NULL, '2021-09-06 08:06:23', '2021-09-24 12:41:31', NULL),
-(2, 'Test', 'test@testing.net', NULL, '$2y$10$UW1b8YqjRZ0UWi4bPmdXyeKO.RMTNQqHJORscGATFKXAP1.gvayaq', NULL, '2021-09-06 08:08:40', '2021-09-06 08:11:26', NULL);
+(1, 'Richard', 'rvdkooij@live.nl', NULL, '$2y$10$DRw//Z0X/JdMxab.7RFjYeCLEWQ1jyARo52YtMXmsdEBb8wCEzozu', NULL, '2021-09-06 08:06:23', '2021-09-24 12:41:31', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
